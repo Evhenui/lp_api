@@ -66,13 +66,18 @@ const currentIndex = ref(null);
 const test = ref(null);
 
 function selectIndex(event) {
-  console.log(event.currentTarget.nextElementSibling.classList.add('active'))
+  if(event.currentTarget.nextElementSibling) {
+    event.currentTarget.nextElementSibling.classList.add('active')
+  }
+  
 /*   currentIndex.value = i;
   counterMenu.value = 1; */
 }
 
 function selectIndexDel(event) {
-  console.log(event.currentTarget.nextElementSibling.classList.remove('active'))
+  if(event.currentTarget.nextElementSibling) {
+    event.currentTarget.nextElementSibling.classList.remove('active')
+  } 
 }
 </script>
 
