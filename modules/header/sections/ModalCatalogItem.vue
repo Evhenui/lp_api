@@ -1,6 +1,7 @@
 <template>
   <ul 
     class="catalog-list"
+    ref="test"
   >
 
     <li
@@ -8,7 +9,10 @@
       v-for="(item, index) in categories"
       :key="item.id"
     >
-      <div @mouseover="selectIndex" class="catalog-list__menu-wrapper">
+      <div  
+        @mouseover="selectIndex" 
+        @mouseleave="selectIndexDel"
+        class="catalog-list__menu-wrapper">
         <div class="catalog-list__item-wrapper">
           <div class="catalog-list__image">
             <SvgIconRemote
@@ -59,11 +63,16 @@ const lang = urlLang ? urlLang : "ru";
 
 const counterMenu = ref(0);
 const currentIndex = ref(null);
+const test = ref(null);
 
 function selectIndex(event) {
-  console.log(event.currentTarget.nextElementSibling)
+  console.log(event.currentTarget.nextElementSibling.classList.add('active'))
 /*   currentIndex.value = i;
   counterMenu.value = 1; */
+}
+
+function selectIndexDel(event) {
+  console.log(event.currentTarget.nextElementSibling.classList.remove('active'))
 }
 </script>
 
@@ -260,7 +269,16 @@ function selectIndex(event) {
   @include flex-container(column, flex-start, flex-start);
 
   &__item {
+    height: 44px;
     @include flex-container(row, flex-start, center);
+
+    & > .catalog-list {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
   }
 
   &__menu-wrapper {
