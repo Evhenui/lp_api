@@ -1,5 +1,5 @@
 <template>
-  <article class="home-slider">
+<article class="home-slider">
     <div class="home-slider__bg-w">
       <span class="ui-loader" v-if="!slideList.length"></span>
       <div
@@ -22,7 +22,6 @@
       :style="{
         '--bg-color': slide.backgroundColor,
         '--translateX': isActive(index, cssProsBannerTranslateX) + 'px',
-        '--angle': isActive(index, cssProsBannerTranslateX * 0.2) + 'deg',
       }"
       :class="{
         hideLeft: isHideLeft(index),
@@ -48,6 +47,18 @@
               {{ slide.title }}
             </a>
           </h2>
+
+          <div
+            class="home-slider__img-w"
+            :class="{
+              move: isActive(index, isMove),
+              active: isActive(index),
+            }"
+            >
+            <img :src="slide.image" alt="" />
+          </div>
+
+
           <p class="home-slider__text">
             {{ slide.content }}
           </p>
@@ -60,18 +71,7 @@
             {{ slide.buttonText }}
           </a>
         </div>
-        <div
-          class="home-slider__img-w"
-          :class="{
-            move: isActive(index, isMove),
-            active: isActive(index),
-          }"
-          :style="{
-            '--img-border-color': slide.imgBorderColor || null,
-          }"
-        >
-          <img :src="slide.image" alt="" />
-        </div>
+
       </section>
     </div>
     <div class="home-slider__arrows" v-if="slideList.length">
@@ -101,7 +101,11 @@
 </template>
 
 <script setup>
+import { useHeaderStore } from '~~/store/headerStore';
 import SliderButton from "~/modules/home/components/UI/SliderButton.vue";
+
+const header = useHeaderStore();
+const storeHeader = header.getSize;
 
 const slideList = [
   {
@@ -145,6 +149,8 @@ const slideList = [
     titleAndBtnColor: "",
   },
 ];
+
+const heightHeader = ref(0);
 
 const isMove = ref(false);
 
@@ -232,9 +238,6 @@ function isShowRight(index) {
   return index === currIndex.value && isNextLeft.value;
 }
 
-/// Проверяет равен ли переданный индекс текущему, если да, возвращает *значение второго параметра* или *1*.
-///
-/// В случае провала всех проверок возвращает *0*
 function isActive(index, val) {
   if (typeof val !== "undefined" && index === currIndex.value) return val;
   else return +(index === currIndex.value);
@@ -311,6 +314,10 @@ function setIndex(nextIndex, sign) {
 
   startInterval(); 
 }
+
+watch(storeHeader, (currentState) => {
+  heightHeader.value = `${currentState.mainHeight + 32}px`
+});
 </script>
 
 <style lang="scss" scoped>
@@ -334,10 +341,17 @@ function setIndex(nextIndex, sign) {
     z-index: -2;
 
     background-color: black;
+
+    @include bigMobile {
+      position: static;
+    }
   }
 
-  @include bigMobile() {
-    /* height: 448px; */
+  @include bigMobile {
+    height: 562px;
+
+    padding-top: v-bind(heightHeader);
+
   }
 
   @mixin animConfig() {
@@ -367,15 +381,6 @@ function setIndex(nextIndex, sign) {
     }
   }
 
-  @keyframes showRight {
-/*     0% {
-      left: 100%;
-    }
-    100% {
-      left: 0;
-    } */
-  }
-
   &__bg-w {
     display: flex;
 
@@ -388,15 +393,14 @@ function setIndex(nextIndex, sign) {
   }
 
   &__bg {
+    width: 100%;
+    height: 100%;
+
     --bg-color: black;
     position: absolute;
     left: 0;
     top: 0;
-    //top: 50%;
 
-    height: 100%;
-    //min-width: 100%;
-    width: 100%;
 
     background-color: Var(--bg-color);
 
@@ -432,7 +436,6 @@ function setIndex(nextIndex, sign) {
     width: 100%;
 
     --translateX: 0px;
-    --angle: 0deg;
     --bg-color: black;
 
     position: absolute;
@@ -447,6 +450,11 @@ function setIndex(nextIndex, sign) {
 
     transition: $local-anim-time $anim-func;
     opacity: 1;
+
+    @include bigMobile {
+      padding-top: v-bind(heightHeader);
+    }
+
     &.active {
       z-index: 2;
     }
@@ -484,6 +492,8 @@ function setIndex(nextIndex, sign) {
     max-width: 1130px;
     width: 100%;
 
+    position: relative;
+
     @include flex-container(row, space-between, center);
 
     gap: 16px;
@@ -496,40 +506,31 @@ function setIndex(nextIndex, sign) {
   &__info {
     --title-and-btn-color: #f36c21;
 
-    position: relative;
     width: 50%;
 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    @include flex-container(column, flex-start, flex-start);
     gap: 24px;
 
     z-index: 3;
 
-    @include bigMobile() {
-      height: 100%;
+    @include bigMobile {
       width: 100%;
+      height: 100%;
 
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
+      @include flex-container(column, flex-start, center);
     }
   }
 
   &__title {
     @include font(36, 43, 700);
     color: white;
-  }
 
-  /*   &__divider {
-    width: max(50%, 150px);
-    border: 1px solid #F7F9FA;
-
-    @include bigMobile() {
-      display: none;
+    @include bigMobile {
+      @include font(24, 34, 700);
+      letter-spacing: 0.02em;
+      text-align: center
     }
-  } */
+  }
 
   &__text {
     @include font(16, 22, 400);
@@ -548,20 +549,15 @@ function setIndex(nextIndex, sign) {
 
     gap: 8px;
 
-    /*  min-width: 200px; */
-    /*   background-color: var(--title-and-btn-color); */
     cursor: pointer;
     user-select: none;
-    /* 	--border-width: 0px;
-	--vert-pad: 8px;
-	--horiz-pad: 16px; */
-
-    /* 	padding: Calc(Var(--vert-pad) - Var(--border-width)) Calc(Var(--horiz-pad) - Var(--border-width)); */
-
-    /* border-radius: 16px; */
 
     z-index: 2;
     transition: 0.2s ease-in-out;
+
+    @include bigMobile {
+      align-self: flex-start;
+    }
 
     &:after {
       content: "";
@@ -582,14 +578,7 @@ function setIndex(nextIndex, sign) {
       &:after {
         width: 100%;
       }
-
-      /* box-shadow: inset 0 0 400px 110px rgba(0, 0, 0, .2); */
     }
-/* 
-    	&::before,
-	&::after {
-		transition: .2s ease-in-out;
-	} */
 
     &.disabled {
       pointer-events: none;
@@ -717,10 +706,11 @@ function setIndex(nextIndex, sign) {
   &__img-w {
     max-width: 404px;
     width: 100%;
-    height: 100%;
+    height: 404px;
 
-    --img-border-color: #f36c21;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    right: 0;
 
     display: flex;
     justify-content: center;
@@ -728,67 +718,39 @@ function setIndex(nextIndex, sign) {
     z-index: 2;
     pointer-events: none;
     overflow: hidden;
+    transform: translateY(-50%);
 
-    @include bigMobile() {
-      //display: none;
+    @include bigMobile {
+      max-width: 173px;
+      height: auto;
 
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 100%;
+      position: static;
 
-      transform: translateX(40%) scale(1.4);
-      opacity: 0.07;
+      transform: translateY(0);
     }
 
     img {
-      position: relative;
+      max-width: 355px;
       height: 100%;
+
+      position: relative;
+      
       object-fit: contain;
+
+      @include bigMobile {
+        max-width: 173px;
+      }
     }
 
     &::before {
       content: "";
       position: absolute;
-      @include setAbs(6px, 6px, 6px, 6px);
+      @include setAbs();
 
-      border: 1px solid var(--img-border-color);
-      transition: Calc(#{$local-anim-time} / 2) $anim-func;
+      border: 1px solid white;
 
-      opacity: 0;
-      z-index: -2;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: Calc(100% - 16px);
-      padding-top: 120%;
-      background-color: Var(--bg-color);
-
-      opacity: 0;
-      transition: $local-anim-time $anim-func;
-      transform: translate(-50%, -50%) rotate(Calc(45deg - Var(--angle)));
-
-      z-index: -1;
-    }
-
-    &.move {
-      &::after {
-        transition: 0s;
-      }
-    }
-
-    &.active {
-      &::before {
-        transition: Calc(#{$local-anim-time} * 2) $anim-func;
-      }
-
-      &::before,
-      &::after {
-        opacity: 1;
+      @include bigMobile {
+        display: none;
       }
     }
   }
@@ -810,14 +772,14 @@ function setIndex(nextIndex, sign) {
     z-index: 5;
 
     @include bigMobile {
-      
+      display: none;
     }
   }
 
   &__nav {
     position: absolute;
     left: 0;
-    bottom: 54px;
+    bottom: 24px;
 
     width: 100%;
 
@@ -855,15 +817,6 @@ function setIndex(nextIndex, sign) {
     &::before,
     &::after {
       transition: 0.2s ease-in-out;
-    }
-
-    &::before {
-      content: "";
-      position: absolute;
-      @include setAbs(4px, 4px, 4px, 4px);
-
-      min-height: 100%;
-      min-width: 100%;
     }
 
     &.active {

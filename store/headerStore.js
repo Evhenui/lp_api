@@ -663,6 +663,9 @@ export const useHeaderStore = defineStore({
           { category: [{ item: '' }] },
         ],
       },
+      sizes: {
+        mainHeight: 0
+      }
     };
   },
   actions: {
@@ -675,6 +678,9 @@ export const useHeaderStore = defineStore({
     activeCatalog(state) {
       this.modalCatalog.active = state;
     },
+    getHeightMain(height) {
+      this.sizes.mainHeight = height;
+    }
   },
   getters: {
     getLanguage: (state) => state.language,
@@ -684,5 +690,6 @@ export const useHeaderStore = defineStore({
     getModalMenu: (state) => state.modalMenu,
     getModalCatalog: (state) => state.modalCatalog,
     getHeightHeader: (state) => state.heightHeader,
+    getSize: (state) => state.sizes,
   },
 });

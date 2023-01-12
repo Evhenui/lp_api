@@ -40,6 +40,7 @@ import ModalCatalog from './ModalCatalog.vue';
 
 const header = useHeaderStore();
 const activeCatalog = header.activeCatalog;
+const getHeightSection = header.getHeightMain;
 
 const mainInfo = ref(null);
 const buttonCatalog = ref(null);
@@ -48,6 +49,8 @@ const catalogModal = ref(null);
 const heightCatalog = ref(0);
 const bottomValue = ref(0);
 const catalogState = ref(false);
+
+const emits = defineEmits(["getHeightMain"]);
 
 const props = defineProps({
   heightHeader: { type: Number, required: false },
@@ -59,6 +62,10 @@ function getButton(item) {
 
 function getModalCatalog(item) {
   catalogModal.value = item;
+}
+
+function getSizeMain() {
+  getHeightSection(mainInfo.value.scrollHeight)
 }
 
 function closeModal(event) {
@@ -85,6 +92,9 @@ function getHeightContent(value) {
 }
 
 onMounted(() => {
+  getSizeMain();
+  window.addEventListener('resize', getSizeMain);
+
   window.addEventListener('click', function (event) {
     closeModal(event);
   });
