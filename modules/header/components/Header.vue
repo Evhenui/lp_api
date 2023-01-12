@@ -60,6 +60,16 @@ onMounted(() => {
 
   &__main-info {
     width: 100%;
+
+    padding: 4px 16px;
+
+    @include bigMobile {
+      position: fixed;
+      top: 0;
+      z-index: 501;
+      
+      padding: 8px 16px;
+    }
     &.active {
       position: fixed;
       top: 0;

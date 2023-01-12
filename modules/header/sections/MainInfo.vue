@@ -102,11 +102,10 @@ onMounted(() => {
   &__wrapper {
     @extend %width-main;
 
-    @include flex-container(row, flex-start, center);
+    @include flex-container(row, space-between, center);
 
     position: relative;
 
-    padding: 4px 16px;
     margin: 0 auto;
     gap: 32px;
 
@@ -114,7 +113,12 @@ onMounted(() => {
       @include flex-container(row, space-between, center);
 
       gap: 16px;
-      padding: 8px 16px;
+    }
+  }
+
+  &__catalog-menu {
+    @include bigMobile {
+      display: none;
     }
   }
 

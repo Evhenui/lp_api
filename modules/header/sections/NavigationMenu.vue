@@ -137,6 +137,10 @@
   &__title {
     @include font(12, 14, 400);
     color: white;
+
+    @include bigMobile {
+      display: none;
+    }
   }
 
   &__item {
@@ -157,6 +161,13 @@
   &__image {
     position: relative;
     font-size: 0;
+
+    @include bigMobile {
+      & > svg {
+        width: 28px;
+        height: 28px;
+      }
+    }
   }
 
   &__count {
@@ -172,6 +183,10 @@
     background-color: #f36c21;
 
     border-radius: 50%;
+
+    @include bigMobile {
+      right: -40%;
+    }
   }
 
   &__number {
