@@ -926,11 +926,10 @@ function calcCurrNav(idx) {
   }
 
   &__about-company-text {
-    @extend %width-content;
     @include flex-container(row, center, center);
     align-self: center;
 
-    @include font(20, 28);
+    @include font(18, 25, 500);
     letter-spacing: 0.02em;
 
     padding: 16px;
@@ -946,7 +945,7 @@ function calcCurrNav(idx) {
   &__team-block {
     @include flex-container(column, stretch, center);
 
-    padding: 48px 16px;
+    padding: 0 16px;
 
     @include mobile {
       padding: 32px 16px;
@@ -993,18 +992,16 @@ function calcCurrNav(idx) {
   }
 
   &__catalogs {
-    @extend %width-main;
-
     background-color: white;
-
-    margin: 0 auto;
   }
 
   &__catalogs-wrapper {
+    @extend %width-main;
     @include flex-container(column, center, center);
 
     gap: 48px;
-    padding: 48px 16px;
+    padding: 48px 16px 0 16px;
+    margin: auto;
 
     @include bigMobile {
       padding: 48px 0 48px 16px;
@@ -1155,9 +1152,9 @@ function calcCurrNav(idx) {
   // main-page__coop-block
 
   &__coop-block {
-    min-height: 504px;
+    /* min-height: 504px; */
 
-    @include flex-container(column, center, center);
+    @include flex-container(column, flex-start, center);
     gap: 64px;
 
     @extend %padding-wrp;

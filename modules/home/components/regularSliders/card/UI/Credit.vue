@@ -30,10 +30,12 @@
         fill="#F36C21"
       />
     </svg>
-  </div>
+   <!--  <SvgIconLocal name="credit" width="28px" height="28px" />   --> 
+  </div>   
 </template>
 
 <script setup>
+import SvgIconLocal from '~~/modules/shared/SvgIconLocal.vue'
 defineProps({
     inactive: { type: Boolean, required: true},
     inactiveCard: { type: Boolean, required: true},

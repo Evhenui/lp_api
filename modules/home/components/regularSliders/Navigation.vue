@@ -84,7 +84,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("resize", onResize);
 });
-
 </script>
 
 <style lang="scss" scoped>
@@ -108,18 +107,18 @@ onUnmounted(() => {
   &__w {
     position: relative;
     @extend %width-main;
+
+    background-color: white;
   }
 
   &__line {
     @extend %width-main;
-    height: 3px;
+    height: 1px;
 
     position: absolute;
     top: 0;
 
-    background-color: #E3E5E6;
-
-    z-index: -1;
+    background-color: #D1D1D1;
 
     @include mobile() {
       height: 1px;

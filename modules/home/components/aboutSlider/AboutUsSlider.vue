@@ -482,7 +482,7 @@ onUnmounted(() => {
     bottom: 13px;
     left: 0;
 
-    background-color: #F36C21;
+    background-color: #6D6D6D;
     border-radius: 2px;
 
     transition: 0.7s ease;

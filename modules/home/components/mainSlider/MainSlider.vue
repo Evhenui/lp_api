@@ -113,7 +113,6 @@ const slideList = [
     url: "",
     buttonText: "Подробнее",
     titleAndBtnColor: "",
-    imgBorderColor: "",
   },
   {
     title: "Аккумуляторна батарея LP 400PZS — 280 AH2",
@@ -124,7 +123,6 @@ const slideList = [
     url: "",
     buttonText: "Подробнее",
     titleAndBtnColor: "",
-    imgBorderColor: "",
   },
   {
     title: "Аккумуляторна батарея LP 400PZS — 280 AH3",
@@ -135,7 +133,6 @@ const slideList = [
     url: "",
     buttonText: "Подробнее",
     titleAndBtnColor: "",
-    imgBorderColor: "",
   },
   {
     title: "Аккумуляторна батарея LP 400PZS — 280 AH4",
@@ -146,7 +143,6 @@ const slideList = [
     url: "",
     buttonText: "Подробнее",
     titleAndBtnColor: "",
-    imgBorderColor: "",
   },
 ];
 
@@ -253,7 +249,8 @@ function isTouch(e) {
 }
 
 function startMove(event) {
-   endInterval();
+  if(window.innerWidth < 1024) {
+    endInterval();
 
   if (isMouse(event)) {
     cssProsStartX.value = event.clientX;
@@ -267,6 +264,7 @@ function startMove(event) {
   isMove.value = true; 
 
   document.body.classList.add(HIDE_SCROLL.value);
+  }
 }
 
 function move(event) {
@@ -324,7 +322,7 @@ function setIndex(nextIndex, sign) {
   display: flex;
   justify-content: center;
 
-  height: 750px;
+  height: 460px;
   width: 100%;
 
   overflow: hidden;
@@ -449,9 +447,6 @@ function setIndex(nextIndex, sign) {
 
     transition: $local-anim-time $anim-func;
     opacity: 1;
-
-    cursor: grab;
-
     &.active {
       z-index: 2;
     }
@@ -459,7 +454,6 @@ function setIndex(nextIndex, sign) {
     &.move {
       transform: translateX(var(--translateX));
       transition: 0s;
-      cursor: grabbing;
     }
 
     &.showLeft {
@@ -851,7 +845,6 @@ function setIndex(nextIndex, sign) {
     pointer-events: auto;
     cursor: pointer;
 
-    transform: rotate(45deg);
     transition: 0.2s ease-in-out;
 
     @include bigMobile {
@@ -875,7 +868,6 @@ function setIndex(nextIndex, sign) {
 
     &.active {
       background-color: #f36c21;
-      transform: rotate(45deg) scale(1.2);
     }
   }
 }

@@ -188,9 +188,23 @@ onMounted(() => {
   &__pagination {
     width: 100%;
 
-    @include flex-container(row, center, center);
+    @include flex-container(row, space-between, center);
 
-    gap: 68px;
+    position: absolute;
+    top: 50%;
+    z-index: 80;
+
+    transform: translateY(-50%);
+
+    @include bigMobile {
+      @include flex-container(row, center, center);
+
+      position: static;
+
+      gap: 68px;
+
+      transform: translateY(0);
+    }
   }
 
 

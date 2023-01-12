@@ -296,7 +296,7 @@ onUnmounted(() => {
     flex-shrink: 2;
     flex-grow: 1;
 
-    padding: 16px;
+    padding: 16px 0;
     color: white;
     background-color: #393d38;
   }
@@ -320,7 +320,7 @@ onUnmounted(() => {
     position: relative;
 /*     height: 100%; */
 
-    padding: 80px 0;
+    padding: 80px 16px;
   }
 
   &__prod-arrows {

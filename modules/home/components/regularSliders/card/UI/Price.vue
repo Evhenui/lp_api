@@ -3,10 +3,10 @@
     class="price"
     :class="[{ active: !price.discount }, { inactive: inactive }]"
   >
-    <h2 class="price__discount" v-if="price.discount">
+    <p class="price__discount" v-if="price.discount">
       {{ price.discount }}
-    </h2>
-    <h1 class="price__total">{{ price.total }}</h1>
+    </p>
+    <p class="price__total">{{ price.total }}</p>
   </div>
 </template>
 
