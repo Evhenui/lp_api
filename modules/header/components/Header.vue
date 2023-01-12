@@ -2,11 +2,13 @@
   <div>
     <header class="header" ref="header">
       <div class="header__wrapper">
-        <AdditionalInfo class="header__additional" />
+        <AdditionalInfo 
+          @getHeightAdditional="getHeightAdditional"
+          class="header__additional" 
+        />
         <MainInfo
           class="header__main-info"
           :class="{ active: activeScroll }"
-          @getPosition="getPosition"
           :heightHeader="heightHeader"
         />
         <ModalMenu />
@@ -27,8 +29,8 @@ const activeScroll = ref(false);
 
 const header = ref(null);
 
-function getPosition(position) {
-  headerPosition.value = Math.round(position);
+function getHeightAdditional(height) {
+  headerPosition.value = height;
 }
 
 function getHeightHeader() {

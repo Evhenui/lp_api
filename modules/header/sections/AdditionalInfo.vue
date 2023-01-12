@@ -71,10 +71,21 @@
 <script setup>
 import { useHeaderStore } from '~~/store/headerStore';
 
+const emits = defineEmits(['getHeightAdditional']);
+
 const additional = ref(null);
 
 const header = useHeaderStore();
 const menuItems = header.getMenuItems;
+
+function getHeight() {
+  emits('getHeightAdditional', additional.value.scrollHeight);
+}
+
+onMounted(() => {
+  getHeight()
+  window.addEventListener('resize', getHeight)
+})
 </script>
 
 <style lang="scss" scoped>

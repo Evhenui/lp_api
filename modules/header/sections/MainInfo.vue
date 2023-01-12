@@ -49,16 +49,9 @@ const heightCatalog = ref(0);
 const bottomValue = ref(0);
 const catalogState = ref(false);
 
-const emits = defineEmits(['getPosition']);
-
 const props = defineProps({
   heightHeader: { type: Number, required: false },
 });
-
-function getPosition() {
-  emits('getPosition', mainInfo.value.getBoundingClientRect().top);
-  getPositionButton();
-}
 
 function getButton(item) {
   buttonCatalog.value = item;
@@ -92,9 +85,6 @@ function getHeightContent(value) {
 }
 
 onMounted(() => {
-  getPosition();
-  window.addEventListener('resize', getPosition);
-
   window.addEventListener('click', function (event) {
     closeModal(event);
   });
