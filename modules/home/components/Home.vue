@@ -25,16 +25,18 @@
     </div>
 
     <div class="main-page__slider-category-block">
-      <SliderCategoryComponent />
+      <div class="main-page__slider-category-block-wrp">
+        <SliderCategoryComponent />
 
-      <div class="main-page__about-company">
-        <div class="main-page__about-company-title-w">
-          <h5 class="main-page__about-company-title">
-            {{ _T("@About company") }}
-          </h5>
-          <p class="main-page__about-company-text">
-            {{ _T("@History of company development") }}
-          </p>
+        <div class="main-page__about-company">
+          <div class="main-page__about-company-title-w">
+            <h5 class="main-page__about-company-title">
+              {{ _T("@About company") }}
+            </h5>
+            <p class="main-page__about-company-text">
+              {{ _T("@History of company development") }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -804,12 +806,15 @@ function calcCurrNav(idx) {
   }
 
   &__slider-category-block {
+    padding: 24px 16px 64px;
+  }
+
+  &__slider-category-block-wrp {
     @extend %width-main;
 
     @include flex-container(column, stretch, center);
     gap: 64px;
-
-    padding: 24px 16px 64px;
+    
     margin: auto;
 
     @include mobile {
@@ -818,14 +823,7 @@ function calcCurrNav(idx) {
   }
 
   &__banner {
-    @extend %width-main;
     @extend %padding-wrp;
-
-    background-color: white;
-
-    border-radius: 16px;
-
-    margin: auto;
 
     @include bigMobile {
       display: none;
@@ -833,10 +831,17 @@ function calcCurrNav(idx) {
   }
 
   &__banner-wrapper {
+    @extend %width-main;
+
     @include flex-container(row, space-between, center);
+
+    background-color: white;
+
+    border-radius: 16px;
 
     gap: 16px;
     padding: 32px;
+    margin: auto;
   }
 
   &__banner-image {
@@ -993,19 +998,22 @@ function calcCurrNav(idx) {
 
   &__catalogs {
     background-color: white;
-  }
 
-  &__catalogs-wrapper {
-    @extend %width-main;
-    @include flex-container(column, center, center);
-
-    gap: 48px;
     padding: 48px 16px 0 16px;
-    margin: auto;
 
     @include bigMobile {
       padding: 48px 0 48px 16px;
     }
+  }
+
+  &__catalogs-wrapper {
+    @extend %width-main;
+    
+    @include flex-container(column, center, center);
+
+    gap: 48px;
+    
+    margin: auto;
   }
 
   &__b2b-bgr {
