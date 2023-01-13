@@ -1,8 +1,8 @@
 <template>
   <section class="catalog" :class="{ active: menuItems.active }" ref="modal">
     <div class="catalog__wrapper">
-      <section class="catalog__main-list" ref="content">
-        <div class="catalog__main-item">
+      <ul class="catalog__main-list" ref="content">
+        <li class="catalog__main-category" @click="inactiveCatalog">
           <NuxtLink to="catalog">
             <div class="catalog__item-wrapper">
               <div class="catalog__image">
@@ -11,116 +11,23 @@
               <span class="catalog__category-title">Каталог категорий</span>
             </div>
           </NuxtLink>
-        </div>
-        <ModalCatalogItem :categories="categories"/>
-        <!--<li
-          class="catalog__main-item"
-          v-for="(item, index) in categories"
+        </li>
+        <ModalCatalogItem
+          v-for="item in categories"
           :key="item.id"
-          @mouseover="selectIndex(index)"
-        >
-          <div class="catalog__item-wrapper">
-            <div class="catalog__image">
-              <SvgIconRemote
-                v-if="item.img"
-                :url="item.img"
-                width="28px"
-                height="28px"
-              />
-            </div>
-            <span class="catalog__title">{{ item.name[lang] }}</span>
-          </div>
-
-          <div class="catalog__image-arrow">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 6L15 12L9 18"
-                stroke="#F36C21"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-        </li>-->
-      </section>
-      <!--<section class="catalog__submenu" :class="{ active: counterMenu >= 1 }">
-        <div
-          class="catalog__submenu-item"
-          :class="{ active: index === currentIndex }"
-          v-for="(item, index) in menuItems.submenu"
-          :key="index"
-        >
-          <ul class="catalog__submenu-list">
-            <li
-              class="catalog__category-item"
-              v-for="(category, i) in item.category"
-              :key="i"
-              @mouseover="selectIndexSubmenu(i, category)"
-            >
-              <span class="catalog__title submenu">{{ category.item }}</span>
-              <div v-if="category.submenu" class="catalog__image-arrow">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9 6L15 12L9 18"
-                    stroke="#F36C21"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <section
-        class="catalog__submenu-deep"
-        :class="{ active: counterMenu === 2 }"
-      >
-        <div
-          class="catalog__submenu-item"
-          :class="{ active: index === currentIndexSubmenu }"
-          v-for="(item, index) in menuItems.submenuDeep"
-          :key="index"
-        >
-          <ul class="catalog__submenu-list">
-            <li
-              class="catalog__category-item"
-              v-for="(category, i) in item.category"
-              :key="i"
-            >
-              <span class="catalog__title submenu">{{ category.item }}</span>
-            </li>
-          </ul>
-        </div>
-      </section>-->
+          :category="item"
+          :parentId="item.id"
+        />
+      </ul>
     </div>
   </section>
 </template>
 
 <script setup>
-import { useHeaderStore } from '~~/store/headerStore';
-//import SvgIconRemote from '~/modules/shared/SvgIconRemote.vue';
-import SvgIconLocal from '~/modules/shared/SvgIconLocal.vue';
-import { useCategoriesStore } from '~~/store/categoriesStore';
-import ModalCatalogItem from './ModalCatalogItem.vue';
-
-//const { urlLang } = useRoute().params;
-
-//const lang = urlLang ? urlLang : 'ru';
+import { useHeaderStore } from "~~/store/headerStore";
+import SvgIconLocal from "~/modules/shared/SvgIconLocal.vue";
+import { useCategoriesStore } from "~~/store/categoriesStore";
+import ModalCatalogItem from "./ModalCatalogItem.vue";
 
 const categoriesStore = useCategoriesStore();
 
@@ -143,7 +50,7 @@ const props = defineProps({
   nullState: { type: Boolean, required: false },
 });
 
-const emits = defineEmits(['catalogModal', 'heightContent']);
+const emits = defineEmits(["catalogModal", "heightContent"]);
 
 watch(nullState, (currentState) => {
   if (currentState) {
@@ -151,18 +58,8 @@ watch(nullState, (currentState) => {
   }
 });
 
-function selectIndex(i) {
-  currentIndex.value = i;
-  counterMenu.value = 1;
-}
-
-function selectIndexSubmenu(i, category) {
-  if (category.submenu) {
-    currentIndexSubmenu.value = i;
-    counterMenu.value = 2;
-  } else {
-    counterMenu.value = 1;
-  }
+function inactiveCatalog() {
+  activeCatalog(false);
 }
 
 function resizeCatalog() {
@@ -172,14 +69,14 @@ function resizeCatalog() {
 }
 
 function sendEmits() {
-  emits('catalogModal', modal.value);
-  emits('heightContent', content.value.scrollHeight);
+  emits("catalogModal", modal.value);
+  emits("heightContent", content.value.scrollHeight);
 }
 
 onMounted(() => {
   sendEmits();
 
-  window.addEventListener('resize', resizeCatalog);
+  window.addEventListener("resize", resizeCatalog);
 });
 </script>
 
@@ -190,9 +87,9 @@ onMounted(() => {
   opacity: 0;
   visibility: hidden;
 
-  &.active {
-    box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  transition: opacity .2s ease-in-out, visibility .2s ease-in-out;
 
+  &.active {
     opacity: 1;
     visibility: visible;
 
@@ -207,20 +104,17 @@ onMounted(() => {
   }
 
   &__wrapper {
-    width: 100%;
-
+    position: relative;
     display: flex;
   }
 
   &__main-list {
-  /*   max-width: 334px;
-    width: 100%; */
+    max-width: 334px;
+    width: 100%;
 
     @include flex-container(column, flex-start);
 
     background-color: white;
-
-    gap: 8px;
 
     overflow: auto;
 
@@ -229,12 +123,10 @@ onMounted(() => {
     }
   }
 
-  &__main-item {
-    min-height: 44px;
-
+  &__main-category {
     @include flex-container(row, space-between, center);
 
-    padding: 0 16px;
+    padding: 8px 16px;
 
     cursor: pointer;
 
@@ -251,16 +143,6 @@ onMounted(() => {
     gap: 16px;
   }
 
-  &__image {
-    flex: 1 0 auto;
-
-    font-size: 0;
-  }
-
-  &__image-arrow {
-    font-size: 0;
-  }
-
   &__category-title {
     max-width: 270px;
     width: 100%;
@@ -268,107 +150,6 @@ onMounted(() => {
     @include font(14, 22, 400);
     color: var(--color-primary-base);
     letter-spacing: 0.02em;
-  }
-
-  &__title {
-    max-width: 270px;
-    width: 100%;
-
-    @include font(14, 22, 400);
-    color: #2b2b2b;
-    letter-spacing: 0.02em;
-
-    &.submenu {
-      white-space: nowrap;
-    }
-  }
-
-  &__submenu {
-    width: 0;
-
-    background-color: white;
-
-    overflow: hidden;
-
-    transition: width 0.4s ease-in-out;
-
-    overflow: auto;
-
-    &::-webkit-scrollbar {
-      width: 0;
-    }
-
-    &.active {
-      width: 334px;
-
-      box-shadow: -16px 0px 7px -16px rgba(0, 0, 0, 0.25);
-    }
-  }
-
-  &__submenu-item {
-    display: none;
-
-    &.active {
-      display: block;
-    }
-  }
-
-  &__submenu-list {
-    @include flex-container(column, flex-start);
-
-    gap: 8px;
-  }
-
-  &__category-item {
-    min-height: 44px;
-
-    @include flex-container(row, space-between, center);
-
-    padding: 0 16px;
-
-    cursor: pointer;
-
-    transition: background-color 0.1s ease-in-out;
-
-    &:hover {
-      background-color: #efefef;
-    }
-  }
-
-  &__submenu-deep {
-    width: 0;
-
-    background-color: white;
-
-    transition: width 0.4s ease-in-out;
-
-    overflow: auto;
-
-    &::-webkit-scrollbar {
-      width: 0;
-    }
-
-    &.active {
-      width: 334px;
-
-      box-shadow: -16px 0px 7px -16px rgba(0, 0, 0, 0.25);
-    }
-  }
-
-  &__blur {
-    display: flex;
-
-    position: fixed;
-    @include setAbs(0, 0, 0, 0);
-
-    background-color: rgba(217, 217, 217, 0.4);
-    backdrop-filter: blur(3px);
-
-    z-index: 510;
-    visibility: hidden;
-    opacity: 0;
-
-    transition: all 0.3s ease-in-out;
   }
 }
 </style>

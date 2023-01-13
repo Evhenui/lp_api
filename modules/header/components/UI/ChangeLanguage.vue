@@ -51,8 +51,6 @@ const changeLang = header.changeLang;
   &__ru {
     @include font(12, 14, 400);
     color: white;
-
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 }
 </style>

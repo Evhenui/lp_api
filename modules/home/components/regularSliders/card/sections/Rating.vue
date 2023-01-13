@@ -177,8 +177,6 @@ defineProps({
     color: #8a8a8a;
     letter-spacing: 0.02em;
 
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
     @include bigMobile {
       @include font(8, 10, 400);
     }

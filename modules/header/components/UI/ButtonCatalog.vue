@@ -77,8 +77,6 @@ onMounted(() => {
   background-color: #f36c21;
   border-radius: 6px;
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
   padding: 8px;
   gap: 8px;
 

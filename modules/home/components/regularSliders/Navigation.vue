@@ -167,7 +167,6 @@ onUnmounted(() => {
   }
 
   &__item {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
   &__title {

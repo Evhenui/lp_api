@@ -21,7 +21,6 @@ defineProps({
 
   background-color: white;
   border: 1px solid #D1D1D1;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   transition: box-shadow .1s ease-in-out;
 

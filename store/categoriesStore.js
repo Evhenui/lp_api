@@ -15,6 +15,9 @@ export const useCategoriesStore = defineStore({
       const { data } = await axios.get(
         'https://dev.api.logicpower.ua/user/catalog/category/list/tree',
       );
+
+      console.log(`Categories fetched. Total item(s): ${data.data.length}`);
+
       this.categories = data.data;
       this.flattenCategories = categoryFlatten(data.data);
       this.headerCategories = categoryHeader(data.data);

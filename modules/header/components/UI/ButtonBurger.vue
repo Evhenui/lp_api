@@ -75,8 +75,6 @@ function activeModal() {
   @include flex-container(column, center, center);
   flex: 0 0 auto;
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
   border: 1px solid #8a8a8a;
   border-radius: 6px;
 

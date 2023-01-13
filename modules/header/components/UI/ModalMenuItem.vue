@@ -16,7 +16,7 @@
   @include flex-container(row, flex-start, center);
 
   gap: 32px;
-  padding-block: 8px;
+  padding-block: 16px;
 
   &:hover .menu-item__titles > span {
     color: var(--color-primary-base);

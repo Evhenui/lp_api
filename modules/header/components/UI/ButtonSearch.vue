@@ -15,8 +15,6 @@
   background-color: #f36c21;
   border-radius: 6px;
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
   padding: 8px 16px;
 
   transition: background-color 0.1s ease-in-out;

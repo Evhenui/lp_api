@@ -14,6 +14,10 @@ export const useI18nStore = defineStore({
           'https://dev.api.logicpower.ua/user/shared/export/translations',
         );
 
+        console.log(
+          `Translations fetched. Total item(s): ${Object.keys(data).length}`,
+        );
+
         const result = { ru: {}, uk: {} };
 
         for (let key in data) {

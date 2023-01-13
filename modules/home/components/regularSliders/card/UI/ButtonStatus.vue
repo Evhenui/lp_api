@@ -65,8 +65,6 @@ defineProps({
 
   @include flex-container(row, center, center);
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
   border: 1px solid;
   border-radius: 4px;
 

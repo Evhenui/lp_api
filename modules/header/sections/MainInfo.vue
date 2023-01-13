@@ -40,7 +40,6 @@ import ModalCatalog from './ModalCatalog.vue';
 
 const header = useHeaderStore();
 const activeCatalog = header.activeCatalog;
-const getHeightSection = header.getHeightMain;
 
 const mainInfo = ref(null);
 const buttonCatalog = ref(null);
@@ -50,11 +49,16 @@ const heightCatalog = ref(0);
 const bottomValue = ref(0);
 const catalogState = ref(false);
 
-const emits = defineEmits(["getHeightMain"]);
+const emits = defineEmits(['getPosition']);
 
 const props = defineProps({
   heightHeader: { type: Number, required: false },
 });
+
+function getPosition() {
+  emits('getPosition', mainInfo.value.getBoundingClientRect().top);
+  getPositionButton();
+}
 
 function getButton(item) {
   buttonCatalog.value = item;
@@ -62,10 +66,6 @@ function getButton(item) {
 
 function getModalCatalog(item) {
   catalogModal.value = item;
-}
-
-function getSizeMain() {
-  getHeightSection(mainInfo.value.scrollHeight)
 }
 
 function closeModal(event) {
@@ -92,8 +92,8 @@ function getHeightContent(value) {
 }
 
 onMounted(() => {
-  getSizeMain();
-  window.addEventListener('resize', getSizeMain);
+  getPosition();
+  window.addEventListener('resize', getPosition);
 
   window.addEventListener('click', function (event) {
     closeModal(event);
@@ -117,31 +117,19 @@ onMounted(() => {
     position: relative;
 
     margin: 0 auto;
-    gap: 32px;
-
-    @include bigMobile {
-      @include flex-container(row, space-between, center);
-
-      gap: 16px;
-    }
-  }
-
-  &__catalog-menu {
-    @include bigMobile {
-      display: none;
-    }
+    gap: 16px;
   }
 
   &__catalog {
     --bottom: 0;
 
     position: absolute;
-    top: 100%;
+    top: 109%;
     bottom: var(--bottom);
     left: 0;
     z-index: 501;
 
-    overflow: auto;
+    box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
   }
 
   &__button-catalog,

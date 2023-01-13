@@ -1,4 +1,5 @@
 <template>
+  <ClientOnly>
   <div v-if="icon" :class="attrs.class">
     <svg
       class="icon"
@@ -6,6 +7,7 @@
       v-html="icon"
     ></svg>
   </div>
+</ClientOnly>
 </template>
 
 <script setup>

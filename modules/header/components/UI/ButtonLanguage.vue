@@ -34,8 +34,6 @@ defineProps(['language']);
 
   @include flex-container(row, flex-start, center);
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
   border: 1px solid #e9e9e9;
   border-radius: 8px;
 

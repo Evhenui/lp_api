@@ -217,8 +217,6 @@ const activeComparison = useState('activeComparison', () => false);
   &__comparison {
     font-size: 0;
 
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-
     cursor: pointer;
   }
 

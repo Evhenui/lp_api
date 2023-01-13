@@ -28,8 +28,6 @@ const { state, inactive } = defineProps(['state', 'inactive']);
 
   @include flex-container(row, center, center);
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
   border-radius: 6px;
 
   padding: 8px;

@@ -1066,7 +1066,7 @@ onMounted(() => {
 
     background-color: white;
 
-    padding: 16px 8px 16px 16px;
+    padding: 16px 8px 4px 16px;
 
     overflow: auto;
   }
@@ -1076,7 +1076,7 @@ onMounted(() => {
 
     background-color: white;
 
-    padding-right: 16px;
+    padding-right: 8px;
 
     overflow: auto;
 
@@ -1101,20 +1101,13 @@ onMounted(() => {
     @include flex-container(column, flex-start);
 
     border-top: 1px solid #d1d1d1;
-
-    gap: 8px;
-    padding: 16px 0;
-
+    
     &:nth-child(1) {
       border-top: none;
-
-      padding: 0 0 16px 0;
     }
   }
 
   &__item {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
     cursor: pointer;
   }
 
@@ -1221,8 +1214,6 @@ onMounted(() => {
 
   &__social-item {
     font-size: 0;
-
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 }
 </style>

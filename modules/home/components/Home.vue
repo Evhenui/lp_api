@@ -1,5 +1,7 @@
 <template>
   <section class="main-page">
+    <Slider />
+
     <MainSlider />
 
     <div class="main-page__banner">
@@ -195,6 +197,7 @@
 </template>
 
 <script setup>
+import Slider from "~/modules/home/components/mainSlider/Slider.vue"
 import SliderCategoryComponent from "~/modules/home/components/SliderCategory.vue";
 import CooperationSliderComponent from "~/modules/home/components/CooperationSlider.vue";
 import AboutUsSliderComponent from "~/modules/home/components/aboutSlider/AboutUsSlider.vue";
@@ -799,10 +802,10 @@ function calcCurrNav(idx) {
 
   @include flex-container(column, center);
 
-  gap: 64px;
+  gap: 32px;
 
   @include bigMobile {
-    gap: 32px;
+    gap: 24px;
   }
 
   &__slider-category-block {

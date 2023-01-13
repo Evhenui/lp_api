@@ -207,7 +207,6 @@ onMounted(() => {
     }
   }
 
-
   &__items {
     width: 100%;
 
