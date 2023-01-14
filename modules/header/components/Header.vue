@@ -18,10 +18,14 @@
 </template>
 
 <script setup>
+import { useHeaderStore } from '~~/store/headerStore';
 import AdditionalInfo from '~/modules/header/sections/AdditionalInfo.vue';
 import MainInfo from '~/modules/header/sections/MainInfo.vue';
 import ModalMenu from '~/modules/header/sections/ModalMenu.vue';
 import ModalCatalog from '~/modules/header/sections/ModalCatalog.vue';
+
+const headerStore = useHeaderStore();
+const getScrollState = headerStore.getScrollState;
 
 const headerPosition = ref(0);
 const heightHeader = ref(0);
@@ -43,6 +47,7 @@ function stateHeader() {
   } else {
     activeScroll.value = false;
   }
+  getScrollState(activeScroll.value);
 }
 
 onMounted(() => {

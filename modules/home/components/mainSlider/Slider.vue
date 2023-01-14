@@ -51,7 +51,6 @@
       </div>
     </div>
   </article>
-  <h1>{{ header }}</h1>
 </template>
 
 <script setup>
@@ -61,10 +60,12 @@ import consolaGlobalInstance from "consola";
 
 const header = useHeaderStore();
 const headerHeight = header.getHeightHeader;
+const scrollStateHeader = header.getScrollHeader;
 
 const sliderWidth = ref(null);
 
-const paddingTop = ref(0);
+const paddingTopMobile = ref('');
+const paddingScrollHeader = ref('');
 const bgColor = ref("black");
 const borderColor = ref('black');
 
@@ -232,6 +233,16 @@ watch(counter, () => {
   interval.value = setInterval(nextSlide, 5000);
 })
 
+watch(headerHeight, (val) => {
+  paddingTopMobile.value = `${val.height}px`;
+})
+
+watch(scrollStateHeader, (val) => {
+  if(window.innerWidth > 1024 && val.state) {
+    paddingScrollHeader.value = paddingTopMobile.value;
+  }
+})
+
 onMounted(() => {
   getSliderValues();
 
@@ -247,9 +258,13 @@ onUnmounted(() => {
 .main-slider {
   background-color: v-bind(bgColor);
 
-  padding: 0 16px;
+  padding: v-bind(paddingScrollHeader) 16px 0 16px;
 
   transition: background-color 0.4s ease-in-out;
+
+  @include bigMobile {
+    padding: 0 16px;
+  }
 
   &__wrapper {
     @extend %width-main;
@@ -265,7 +280,7 @@ onUnmounted(() => {
     overflow: hidden;
 
     @include bigMobile {
-      padding-top: 88px;
+      padding-top: calc(v-bind(paddingTopMobile) + 32px);
       gap: 48px;
     }
   }

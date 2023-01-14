@@ -39,7 +39,7 @@ import NavigationMenu from './NavigationMenu.vue';
 import ModalCatalog from './ModalCatalog.vue';
 
 const header = useHeaderStore();
-const activeCatalog = header.activeCatalog;
+const headerHeight = header.getHeightContent;
 
 const mainInfo = ref(null);
 const buttonCatalog = ref(null);
@@ -58,6 +58,10 @@ const props = defineProps({
 function getPosition() {
   emits('getPosition', mainInfo.value.getBoundingClientRect().top);
   getPositionButton();
+}
+
+function getHeightHeader() {
+  headerHeight(mainInfo.value.offsetHeight)
 }
 
 function getButton(item) {
@@ -92,6 +96,9 @@ function getHeightContent(value) {
 }
 
 onMounted(() => {
+  getHeightHeader();
+  window.addEventListener('resize', getHeightHeader);
+
   getPosition();
   window.addEventListener('resize', getPosition);
 
