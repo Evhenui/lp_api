@@ -24,9 +24,8 @@
 
                 <p class="main-slider__subtitle">{{ item.content }}</p>
 
-                <a href="#" class="main-slider__details">{{
-                  item.buttonText
-                }}</a>
+                <a href="#" class="main-slider__details">
+                  {{item.buttonText}}</a>
               </div>
             </div>
           </div>
@@ -52,6 +51,7 @@
       </div>
     </div>
   </article>
+  <h1>{{ header }}</h1>
 </template>
 
 <script setup>
@@ -66,6 +66,7 @@ const sliderWidth = ref(null);
 
 const paddingTop = ref(0);
 const bgColor = ref("black");
+const borderColor = ref('black');
 
 const counter = ref(0);
 const sliderLength = ref(0);
@@ -77,53 +78,56 @@ const activeTouches = ref(false);
 const mobileTranslateX = ref(0);
 const startPosition = ref(0);
 const difference = ref(0);
-
-const intervalID = ref(-1);
+const interval = ref(-1);
 
 const slideList = [
   {
     title: "Аккумуляторна батарея LP 400PZS — 280 AH1",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     image:
       "https://images.ctfassets.net/ql2dtx28kmvf/2ltaWF07s0nzDneVRsBS9/7c1c11394df6be85eb7590966337b8d6/Banner_new_B2B_-349552_-363636.png",
     backgroundColor: "#393D38",
     url: "",
     buttonText: "Подробнее",
     titleAndBtnColor: "",
+    imgBorderColor: "#F36C21"
   },
   {
     title: "Аккумуляторна батарея LP 400PZS — 280 AH2",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     image:
       "https://images.ctfassets.net/ql2dtx28kmvf/4Va4aWBR80jjY1hZrjsZHA/833bad1bdf1d1d856aff6853fa125c51/Banner_new_B2B-7.png",
     backgroundColor: "#273d22",
     url: "",
     buttonText: "Подробнее",
     titleAndBtnColor: "",
+    imgBorderColor: "#F36C21"
   },
   {
     title: "Аккумуляторна батарея LP 400PZS — 280 AH3",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     image:
       "https://images.ctfassets.net/ql2dtx28kmvf/2ltaWF07s0nzDneVRsBS9/7c1c11394df6be85eb7590966337b8d6/Banner_new_B2B_-349552_-363636.png",
     backgroundColor: "#393D38",
     url: "",
     buttonText: "Подробнее",
     titleAndBtnColor: "",
+    imgBorderColor: "#F36C21"
   },
   {
     title: "Аккумуляторна батарея LP 400PZS — 280 AH4",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     image:
       "https://images.ctfassets.net/ql2dtx28kmvf/4Va4aWBR80jjY1hZrjsZHA/833bad1bdf1d1d856aff6853fa125c51/Banner_new_B2B-7.png",
     backgroundColor: "#273d22",
     url: "",
     buttonText: "Подробнее",
     titleAndBtnColor: "",
+    imgBorderColor: "#F36C21"
   },
 ];
 
@@ -131,6 +135,7 @@ function getSliderValues() {
   sliderLength.value = slideList.length;
   slideWidth.value = sliderWidth.value.scrollWidth / sliderLength.value;
   bgColor.value = slideList[0].backgroundColor;
+  borderColor.value = slideList[0].imgBorderColor;
 
   actualTransition();
 }
@@ -138,10 +143,6 @@ function getSliderValues() {
 function actualTransition() {
   translateX.value = slideWidth.value * counter.value;
   translateXVar.value = `-${translateX.value}px`;
-}
-
-function startInterval() {
-  setInterval(nextSlide, 3000);
 }
 
 function prevSlide() {
@@ -154,6 +155,7 @@ function prevSlide() {
   }
 
   bgColor.value = slideList[counter.value].backgroundColor;
+  borderColor.value = slideList[counter.value].imgBorderColor;
   translateXVar.value = `-${translateX.value}px`;
 }
 
@@ -165,7 +167,9 @@ function nextSlide() {
     counter.value = 0;
     translateX.value = 0;
   }
+
   bgColor.value = slideList[counter.value].backgroundColor;
+  borderColor.value = slideList[counter.value].imgBorderColor;
   translateXVar.value = `-${translateX.value}px`;
 }
 
@@ -217,10 +221,15 @@ function endInerval(interval) {
   clearInterval(interval)
 }
 
-watch(counter, (val) => {
-  endInerval(intervalID.value)
+function isActive(index, val) {
+  if (typeof val !== 'undefined' && index === counter.value)
+    return val;
+  else return +(index === counter.value)
+}
 
-  intervalID.value = setInterval(nextSlide, 5000);
+watch(counter, () => {
+  endInerval(interval.value)
+  interval.value = setInterval(nextSlide, 5000);
 })
 
 onMounted(() => {
@@ -238,10 +247,13 @@ onUnmounted(() => {
 .main-slider {
   background-color: v-bind(bgColor);
 
+  padding: 0 16px;
+
   transition: background-color 0.4s ease-in-out;
 
   &__wrapper {
     @extend %width-main;
+    min-height: 460px;
 
     position: relative;
 
@@ -249,6 +261,8 @@ onUnmounted(() => {
 
     margin: auto;
     padding: 24px 0;
+
+    overflow: hidden;
 
     @include bigMobile {
       padding-top: 88px;
@@ -258,8 +272,6 @@ onUnmounted(() => {
 
   &__slider {
     @extend %width-main;
-
-    overflow: hidden;
   }
 
   &__slides {
@@ -276,7 +288,7 @@ onUnmounted(() => {
     padding: 0 64px;
 
     @include bigMobile {
-      padding: 0 16px;
+      padding: 0;
     }
   }
 
@@ -296,6 +308,10 @@ onUnmounted(() => {
     @include flex-container(column, flex-start, flex-start);
 
     gap: 16px;
+
+    @include smallestScreen {
+      max-width: 380px;
+    }
 
     @include bigMobile {
       max-width: 100%;
@@ -320,23 +336,64 @@ onUnmounted(() => {
   &__image {
     max-width: 404px;
     width: 100%;
+    height: 404px;
 
     position: absolute;
     top: 50%;
     right: 0;
 
+    @include flex-container(column, center, center);
+
     transform: translateY(-50%);
 
-    padding: 48px 62px;
+    padding: 16px;
 
     @include bigMobile {
       max-width: 219px;
+      height: auto;
 
       position: static;
+
+      @include flex-container(column, center, center);
 
       transform: translateY(0);
 
       padding: 0;
+    }
+
+    &::before {
+      content: '';
+      
+      position: absolute;
+      @include setAbs();
+      z-index: -2;
+
+      border: 1px solid v-bind(borderColor);
+
+      transition: border-color .3s ease-in-out;
+      @include bigMobile {
+        display: none;
+      }
+    }
+
+    &::after {
+      content: '';
+      width: 100%;
+      height: 100%;
+
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: -1;
+    
+      background-color: v-bind(bgColor);
+
+      transition: background-color .5s ease-in-out;    
+      transform: translate(-50%, -50%) rotate(45deg);
+
+      @include bigMobile {
+        display: none;
+      }
     }
   }
 
@@ -381,6 +438,12 @@ onUnmounted(() => {
   }
 
   &__pagination {
+    position: absolute;
+    bottom: 16px;
+
+    @include bigMobile {
+      position: static;
+    }
   }
 
   &__nav {
@@ -394,6 +457,7 @@ onUnmounted(() => {
     height: 20px;
 
     background-color: white;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     border-radius: 50%;
 
     cursor: pointer;
