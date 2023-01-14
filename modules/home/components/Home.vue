@@ -1,6 +1,6 @@
 <template>
   <section class="main-page">
-    <MainSlider />
+    <MainSlider :items="mainSliderItems" />
 
     <div class="main-page__banner">
       <div class="main-page__banner-wrapper">
@@ -195,12 +195,63 @@
 </template>
 
 <script setup>
-import MainSlider from "~/modules/home/components/mainSlider/Slider.vue"
+import MainSlider from "~/modules/home/components/mainSlider/MainSlider.vue"
 import SliderCategoryComponent from "~/modules/home/components/SliderCategory.vue";
 import CooperationSliderComponent from "~/modules/home/components/CooperationSlider.vue";
 import AboutUsSliderComponent from "~/modules/home/components/aboutSlider/AboutUsSlider.vue";
 import RegularSlider from "~/modules/home/components/regularSliders/RegularSlider.vue";
 import Navigation from "~/modules/home/components/regularSliders/Navigation.vue";
+
+const mainSliderItems = [
+  {
+    title: "Аккумуляторна батарея LP 400PZS — 280 AH1",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    image:
+      "https://images.ctfassets.net/ql2dtx28kmvf/2ltaWF07s0nzDneVRsBS9/7c1c11394df6be85eb7590966337b8d6/Banner_new_B2B_-349552_-363636.png",
+    backgroundColor: "#393D38",
+    url: "",
+    buttonText: "Подробнее",
+    titleAndBtnColor: "",
+    imgBorderColor: "#F36C21"
+  },
+  {
+    title: "Аккумуляторна батарея LP 400PZS — 280 AH2",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    image:
+      "https://images.ctfassets.net/ql2dtx28kmvf/4Va4aWBR80jjY1hZrjsZHA/833bad1bdf1d1d856aff6853fa125c51/Banner_new_B2B-7.png",
+    backgroundColor: "#273d22",
+    url: "",
+    buttonText: "Подробнее",
+    titleAndBtnColor: "",
+    imgBorderColor: "#F36C21"
+  },
+  {
+    title: "Аккумуляторна батарея LP 400PZS — 280 AH3",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    image:
+      "https://images.ctfassets.net/ql2dtx28kmvf/2ltaWF07s0nzDneVRsBS9/7c1c11394df6be85eb7590966337b8d6/Banner_new_B2B_-349552_-363636.png",
+    backgroundColor: "#393D38",
+    url: "",
+    buttonText: "Подробнее",
+    titleAndBtnColor: "",
+    imgBorderColor: "#F36C21"
+  },
+  {
+    title: "Аккумуляторна батарея LP 400PZS — 280 AH4",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    image:
+      "https://images.ctfassets.net/ql2dtx28kmvf/4Va4aWBR80jjY1hZrjsZHA/833bad1bdf1d1d856aff6853fa125c51/Banner_new_B2B-7.png",
+    backgroundColor: "#273d22",
+    url: "",
+    buttonText: "Подробнее",
+    titleAndBtnColor: "",
+    imgBorderColor: "#F36C21"
+  },
+];
 
 const cardItemsNovelties = [
   {
