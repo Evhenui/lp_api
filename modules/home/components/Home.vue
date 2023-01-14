@@ -1,7 +1,5 @@
 <template>
   <section class="main-page">
-    <Slider />
-
     <MainSlider />
 
     <div class="main-page__banner">
@@ -197,11 +195,10 @@
 </template>
 
 <script setup>
-import Slider from "~/modules/home/components/mainSlider/Slider.vue"
+import MainSlider from "~/modules/home/components/mainSlider/Slider.vue"
 import SliderCategoryComponent from "~/modules/home/components/SliderCategory.vue";
 import CooperationSliderComponent from "~/modules/home/components/CooperationSlider.vue";
 import AboutUsSliderComponent from "~/modules/home/components/aboutSlider/AboutUsSlider.vue";
-import MainSlider from "~/modules/home/components/mainSlider/MainSlider.vue";
 import RegularSlider from "~/modules/home/components/regularSliders/RegularSlider.vue";
 import Navigation from "~/modules/home/components/regularSliders/Navigation.vue";
 

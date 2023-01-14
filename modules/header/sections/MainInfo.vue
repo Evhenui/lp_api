@@ -39,6 +39,7 @@ import NavigationMenu from './NavigationMenu.vue';
 import ModalCatalog from './ModalCatalog.vue';
 
 const header = useHeaderStore();
+const activeCatalog = header.activeCatalog;
 const headerHeight = header.getHeightContent;
 
 const mainInfo = ref(null);
