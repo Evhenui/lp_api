@@ -57,6 +57,7 @@
 <script setup>
 import { useHeaderStore } from "~~/store/headerStore";
 import PaginationBtnArrow from "~/modules/home/components/UI/PaginationBtnArrow.vue";
+import consolaGlobalInstance from "consola";
 
 const header = useHeaderStore();
 const headerHeight = header.getHeightHeader;
@@ -76,6 +77,8 @@ const activeTouches = ref(false);
 const mobileTranslateX = ref(0);
 const startPosition = ref(0);
 const difference = ref(0);
+
+const intervalID = ref(-1);
 
 const slideList = [
   {
@@ -209,6 +212,16 @@ function handleTouchEnd() {
     activeTouches.value = false;
   }
 }
+
+function endInerval(interval) {
+  clearInterval(interval)
+}
+
+watch(counter, (val) => {
+  endInerval(intervalID.value)
+
+  intervalID.value = setInterval(nextSlide, 5000);
+})
 
 onMounted(() => {
   getSliderValues();
