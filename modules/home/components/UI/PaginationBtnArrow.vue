@@ -28,6 +28,7 @@ defineProps({
 
   border-radius: 50%;
   border: 1px solid #D1D1D1;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   background-color: white;
 
