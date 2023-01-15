@@ -94,7 +94,7 @@ onMounted(() => {
   }
 
   &__additional {
-    transition: opacity .3s ease-in-out;
+    transition: opacity .5s ease-in-out;
 
     @include bigMobile {
       display: none;
