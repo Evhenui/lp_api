@@ -36,6 +36,7 @@ function getHeightHeader() {
   heightHeader.value = header.value.offsetHeight;
 }
 
+//get height main info from margin bottom
 function getHeightMainInfo(height) {
   heightMainInfo.value = `${height}px`;
 }
@@ -64,6 +65,7 @@ onMounted(() => {
   }
 
   &.active {
+
     margin-bottom: v-bind(heightMainInfo);
 
     .header__additional {
