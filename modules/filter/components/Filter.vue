@@ -19,11 +19,11 @@
           :style="{ '--height': heightFilters + 'px' }"
           :items="filterItem"
         />
-       <!--  <SelectGroup
-          class="catalog__select"
+        <SelectGroup
+          class="filter__select"
           :selectList="selectItems"
           :caption="'По умолчанию'"
-        /> -->
+        />
       </section>
       <CatalogMain :changeView="changeView" :activeFilters="mobileFilters" />
     </div>
@@ -33,7 +33,7 @@
 <script setup>
 import SelectedFilter from "~/modules/filter/components/sections/SelectedFilter.vue";
 import CatalogMain from "~/modules/filter/components/sections/CatalogMain.vue";
-/* import SelectGroup from "@components/common/buttons/SelectGroup.vue"; */
+import SelectGroup from "~/modules/filter/components/UI/SelectGroup.vue";
 import ButtonFilter from "~/modules/filter/components/UI/ButtonFilter.vue";
 import ButtonFilterMobile from "~/modules/filter/components/UI/ButtomFilterMobile.vue";
 
@@ -91,20 +91,19 @@ function showFilters(event) {
   &__wrapper {
     @extend %width-main;
 
+    @include flex-container(column, flex-start, flex-start);
+
     margin: 0 auto;
     padding-bottom: 136px;
+    gap: 24px;
   }
 
   &__title {
     @include font(36, 43, 700);
     color: #2b2b2b;
 
-    margin-bottom: 32px;
-
     @include bigMobile {
       @include font(24, 34, 700);
-
-      margin-bottom: 24px;
     }
   }
 
@@ -125,9 +124,9 @@ function showFilters(event) {
   }
 
   &__header {
-    @include flex-container(row, space-between, flex-end);
+    width: 100%;
 
-    margin-bottom: 24px;
+    @include flex-container(row, space-between, flex-end);
 
     transition: all 0.3s ease-in-out;
 

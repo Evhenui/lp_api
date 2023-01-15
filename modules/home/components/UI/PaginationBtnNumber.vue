@@ -1,13 +1,12 @@
 <template>
   <button class="pagination-button">
-    <span class="pagination-button__number">{{ number }}</span>
+    <span class="pagination-button__number">
+      <slot></slot>
+    </span>
   </button>
 </template>
 
 <script setup>
-defineProps({
-  number: { type: Number, required: true},
-});
 </script>
 
 <style lang="scss" scoped>

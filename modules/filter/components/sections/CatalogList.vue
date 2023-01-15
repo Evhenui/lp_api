@@ -13,14 +13,13 @@
       <nav class="catalog-list__navigation">
         <ButtonShowMore />
         <div class="catalog-list__pagination">
-          <ButtonPrev />
+          <PaginationBtnArrow />
           <div class="catalog-list__pages">
-            <ButtonPage 
-              v-for="(item, index) in 3"
-              :key="index"
-            >{{ index }}</ButtonPage>
+            <PaginationBtnNumber>1</PaginationBtnNumber>
+            <PaginationBtnNumber>...</PaginationBtnNumber>
+            <PaginationBtnNumber>50</PaginationBtnNumber>
           </div>
-          <ButtonNext />
+          <PaginationBtnArrow :directionRight="true" />
         </div>
       </nav>
     </div>
@@ -32,10 +31,10 @@
 /* import CardProduct from "~/modules/filter/components/sections/cardProduct/CardProduct.vue"; */
 import CardProduct from "~/modules/home/components/regularSliders/card/CardProduct.vue";
 import ButtonShowMore from "~/modules/filter/components/UI/ButtonShowMore.vue";
-import ButtonPrev from "~/modules/filter/components/UI/ButtonPrev.vue";
-import ButtonNext from "~/modules/filter/components/UI/ButtonNext.vue";
+import PaginationBtnArrow from "~~/modules/home/components/UI/PaginationBtnArrow.vue";
 import ButtonPage from "~/modules/filter/components/UI/ButtonPage.vue";
 import FooterCatalog from "~/modules/filter/components/sections/FooterCatalog.vue";
+import PaginationBtnNumber from "~~/modules/home/components/UI/PaginationBtnNumber.vue";
 
 const props = defineProps({
   changeView: { type: Boolean, required: false},
