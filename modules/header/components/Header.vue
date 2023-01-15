@@ -1,34 +1,29 @@
 <template>
-  <div>
-    <header class="header" ref="header">
-      <div class="header__wrapper">
-        <AdditionalInfo 
-          @getHeightAdditional="getHeightAdditional"
-          class="header__additional" 
-        />
-        <MainInfo
-          class="header__main-info"
-          :class="{ active: activeScroll }"
-          :heightHeader="heightHeader"
-        />
-        <ModalMenu />
-      </div>
-    </header>
-  </div>
+  <header class="header" ref="header" :class="{ active: activeScroll }">
+    <div class="header__wrapper">
+      <AdditionalInfo 
+        @getHeightAdditional="getHeightAdditional"
+        class="header__additional" 
+      />
+      <MainInfo
+        class="header__main-info"
+        @getHeightMainInfo="getHeightMainInfo"
+        :heightHeader="heightHeader"
+      />
+      <ModalMenu />
+    </div>
+  </header>
 </template>
 
 <script setup>
-import { useHeaderStore } from '~~/store/headerStore';
 import AdditionalInfo from '~/modules/header/sections/AdditionalInfo.vue';
 import MainInfo from '~/modules/header/sections/MainInfo.vue';
 import ModalMenu from '~/modules/header/sections/ModalMenu.vue';
 import ModalCatalog from '~/modules/header/sections/ModalCatalog.vue';
 
-const headerStore = useHeaderStore();
-const getScrollState = headerStore.getScrollState;
-
 const headerPosition = ref(0);
 const heightHeader = ref(0);
+const heightMainInfo = ref(0);
 const activeScroll = ref(false);
 
 const header = ref(null);
@@ -41,13 +36,14 @@ function getHeightHeader() {
   heightHeader.value = header.value.offsetHeight;
 }
 
+function getHeightMainInfo(height) {
+  heightMainInfo.value = `${height}px`;
+}
+
 function stateHeader() {
-  if (window.scrollY >= headerPosition.value) {
-    activeScroll.value = true;
-  } else {
-    activeScroll.value = false;
+  if(window.innerWidth > 1024) {
+    activeScroll.value = window.scrollY >= headerPosition.value ? true: false;
   }
-  getScrollState(activeScroll.value);
 }
 
 onMounted(() => {
@@ -63,6 +59,26 @@ onMounted(() => {
 .header {
   background-color: white;
 
+  @include bigMobile {
+    margin-bottom: v-bind(heightMainInfo);
+  }
+
+  &.active {
+    margin-bottom: v-bind(heightMainInfo);
+
+    .header__additional {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .header__main-info {
+      position: fixed;
+      top: 0;
+
+      z-index: 501;
+    }
+  }
+
   &__main-info {
     width: 100%;
 
@@ -75,15 +91,11 @@ onMounted(() => {
       
       padding: 8px 16px;
     }
-    &.active {
-      position: fixed;
-      top: 0;
-
-      z-index: 501;
-    }
   }
 
   &__additional {
+    transition: opacity .3s ease-in-out;
+
     @include bigMobile {
       display: none;
     }

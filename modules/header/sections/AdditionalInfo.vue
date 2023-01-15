@@ -22,7 +22,7 @@
           </div>
           <span class="additional-info__item-name">0800309988</span>
         </a>
-        <a href="#" class="additional-info__location">
+        <!-- <a href="#" class="additional-info__location">
           <div class="additional-info__image">
             <svg
               width="17"
@@ -55,7 +55,7 @@
             </svg>
           </div>
           <span class="additional-info__item-name">Одесса</span>
-        </a>
+        </a> -->
       </div>
       <ul class="additional-info__menu-items">
         <li
@@ -117,12 +117,16 @@ onMounted(() => {
   }
 
   &__image {
-    font-size: 0;
+    & svg {
+      & path {
+        stroke: var(--color-primary-base);
+      }
+    }
   }
 
   &__item-name {
-    @include font(12, 14, 400);
-    color: #021e0f;
+    @include font(18, 24, 700);
+    color: var(--color-primary-base);
   }
 
   &__menu-items {
@@ -135,8 +139,14 @@ onMounted(() => {
   }
 
   &__menu-item-name {
-    @include font(12, 14, 400);
+    @include font(14, 16, 400);
     color: #393d38;
+
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--color-primary-base);
+    }
   }
 }
 </style>

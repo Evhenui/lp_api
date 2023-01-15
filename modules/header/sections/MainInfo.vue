@@ -29,18 +29,17 @@
 </template>
 
 <script setup>
-import { useHeaderStore } from '~~/store/headerStore';
-import ButtonBurger from '../components/UI/ButtonBurger.vue';
-import ButtonCatalog from '../components/UI/ButtonCatalog.vue';
-import Logo from '../components/UI/Logo.vue';
-import SearchProduct from '../components/UI/SearchProduct.vue';
-import ChangeLanguage from '../components/UI/ChangeLanguage.vue';
-import NavigationMenu from './NavigationMenu.vue';
-import ModalCatalog from './ModalCatalog.vue';
+import { useHeaderStore } from "~~/store/headerStore";
+import ButtonBurger from "../components/UI/ButtonBurger.vue";
+import ButtonCatalog from "../components/UI/ButtonCatalog.vue";
+import Logo from "../components/UI/Logo.vue";
+import SearchProduct from "../components/UI/SearchProduct.vue";
+import ChangeLanguage from "../components/UI/ChangeLanguage.vue";
+import NavigationMenu from "./NavigationMenu.vue";
+import ModalCatalog from "./ModalCatalog.vue";
 
 const header = useHeaderStore();
 const activeCatalog = header.activeCatalog;
-const headerHeight = header.getHeightContent;
 
 const mainInfo = ref(null);
 const buttonCatalog = ref(null);
@@ -50,19 +49,16 @@ const heightCatalog = ref(0);
 const bottomValue = ref(0);
 const catalogState = ref(false);
 
-const emits = defineEmits(['getPosition']);
+const emits = defineEmits(["getHeightMainInfo"]);
 
 const props = defineProps({
   heightHeader: { type: Number, required: false },
 });
 
 function getPosition() {
-  emits('getPosition', mainInfo.value.getBoundingClientRect().top);
+/*   emits("getPosition", mainInfo.value.getBoundingClientRect().top); */
+  emits("getHeightMainInfo", mainInfo.value.offsetHeight);
   getPositionButton();
-}
-
-function getHeightHeader() {
-  headerHeight(mainInfo.value.offsetHeight)
 }
 
 function getButton(item) {
@@ -97,17 +93,14 @@ function getHeightContent(value) {
 }
 
 onMounted(() => {
-  getHeightHeader();
-  window.addEventListener('resize', getHeightHeader);
-
   getPosition();
-  window.addEventListener('resize', getPosition);
+  window.addEventListener("resize", getPosition);
 
-  window.addEventListener('click', function (event) {
+  window.addEventListener("click", function (event) {
     closeModal(event);
   });
 
-  window.addEventListener('mouseover', function (event) {
+  window.addEventListener("mouseover", function (event) {
     startStateCatalog(event);
   });
 });
@@ -148,7 +141,8 @@ onMounted(() => {
   }
 
   &__logo {
-    margin-right: 4px;
+    width: 48px;
+    height: 48px;
 
     @include bigMobile {
       display: none;

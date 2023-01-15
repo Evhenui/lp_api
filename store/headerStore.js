@@ -663,12 +663,6 @@ export const useHeaderStore = defineStore({
           { category: [{ item: '' }] },
         ],
       },
-      heightHeader: {
-        height: 0
-      },
-      activeScroll: {
-        state: false
-      }
     };
   },
   actions: {
@@ -681,12 +675,6 @@ export const useHeaderStore = defineStore({
     activeCatalog(state) {
       this.modalCatalog.active = state;
     },
-    getHeightContent(height) {
-      this.heightHeader.height = height;
-    },
-    getScrollState(state) {
-      this.activeScroll.state = state;
-    }
   },
   getters: {
     getLanguage: (state) => state.language,
@@ -696,6 +684,5 @@ export const useHeaderStore = defineStore({
     getModalMenu: (state) => state.modalMenu,
     getModalCatalog: (state) => state.modalCatalog,
     getHeightHeader: (state) => state.heightHeader,
-    getScrollHeader: (state) => state.activeScroll,
   },
 });

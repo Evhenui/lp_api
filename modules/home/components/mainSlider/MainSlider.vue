@@ -54,22 +54,14 @@
 </template>
 
 <script setup>
-import { useHeaderStore } from "~~/store/headerStore";
 import PaginationBtnArrow from "~/modules/home/components/UI/PaginationBtnArrow.vue";
 import consolaGlobalInstance from "consola";
-
-const header = useHeaderStore();
-const headerHeight = header.getHeightHeader;
-const scrollStateHeader = header.getScrollHeader;
 
 const props = defineProps({
   items: { type: Array, required: true},
 });
 
 const sliderWidth = ref(null);
-
-const paddingTopMobile = ref('');
-const paddingScrollHeader = ref('');
 const bgColor = ref("black");
 const borderColor = ref('black');
 
@@ -180,18 +172,6 @@ watch(counter, () => {
   interval.value = setInterval(nextSlide, 5000);
 })
 
-watch(headerHeight, (val) => {
-  paddingTopMobile.value = `${val.height}px`;
-})
-
-watch(scrollStateHeader, (val) => {
-  if(window.innerWidth > 1024 && val.state) {
-    paddingScrollHeader.value = paddingTopMobile.value;
-  } else if(!val.state) {
-    paddingScrollHeader.value = 0;
-  }
-})
-
 onMounted(() => {
   getSliderValues();
 
@@ -207,7 +187,7 @@ onUnmounted(() => {
 .main-slider {
   background-color: v-bind(bgColor);
 
-  padding: v-bind(paddingScrollHeader) 16px 0 16px;
+  padding: 0 16px;
 
   transition: background-color 0.4s ease-in-out;
 
@@ -229,7 +209,7 @@ onUnmounted(() => {
     overflow: hidden;
 
     @include bigMobile {
-      padding-top: calc(v-bind(paddingTopMobile) + 32px);
+      padding-top: 32px;
       gap: 48px;
     }
   }

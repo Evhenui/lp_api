@@ -1,41 +1,37 @@
 <template>
-  <li
-    class="item"
-    @mouseenter="visible = true"
-    @mouseleave="visible = false"
-    @click="activeModal"
-  >
-    <div class="item__wrapper">
-      <div class="item__image">
-        <SvgIconRemote
+  <li @mouseenter="visible = true" @mouseleave="visible = false">
+    <NuxtLink class="item" :to="category.slug" @click="inactiveCatalog">
+      <div class="item__wrapper">
+        <div class="item__image" v-if="category.img">
+          <!-- <SvgIconRemote
           v-if="category.img"
           :url="category.img"
           width="28px"
           height="28px"
-        />
-      </div>
-      <NuxtLink :to="category.slug" @click="inactiveCatalog">
+        /> -->
+          <img :src="category.img" alt="" />
+        </div>
         <span class="item__title">{{ category.name[lang] }}</span>
-      </NuxtLink>
-    </div>
+      </div>
+      <div v-if="category.children" class="item__image-arrow">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9 6L15 12L9 18"
+            stroke="#F36C21"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+    </NuxtLink>
 
-    <div v-if="category.children" class="item__image-arrow">
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M9 6L15 12L9 18"
-          stroke="#F36C21"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </div>
     <template v-if="category.children">
       <ul class="item__new-list" v-show="visible">
         <ModalCatalogItem
@@ -102,19 +98,16 @@ const lang = urlLang ? urlLang : "ru";
   }
 
   &__image {
-    flex: 1 0 auto;
-
-    font-size: 0;
+    width: 28px;
+    height: 28px;
   }
 
   &__image-arrow {
-    font-size: 0;
+    width: 24px;
+    height: 24px;
   }
 
   &__title {
-    max-width: 270px;
-    width: 100%;
-
     @include font(14, 22, 400);
     color: #2b2b2b;
     letter-spacing: 0.02em;

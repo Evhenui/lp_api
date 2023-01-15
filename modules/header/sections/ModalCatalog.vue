@@ -2,14 +2,16 @@
   <section class="catalog" :class="{ active: menuItems.active }" ref="modal">
     <div class="catalog__wrapper">
       <ul class="catalog__main-list" ref="content">
-        <li class="catalog__main-category" @click="inactiveCatalog">
-          <NuxtLink to="catalog">
-            <div class="catalog__item-wrapper">
-              <div class="catalog__image">
-                <SvgIconLocal name="grid-add" width="28px" height="28px" />
-              </div>
-              <span class="catalog__category-title">Каталог категорий</span>
+        <li class="catalog__main-category">
+          <NuxtLink
+            class="catalog__item-wrapper"
+            to="catalog"
+            @click="inactiveCatalog"
+          >
+            <div class="catalog__image">
+              <SvgIconLocal name="grid-add" width="28px" height="28px" />
             </div>
+            <span class="catalog__category-title">Каталог категорий</span>
           </NuxtLink>
         </li>
         <ModalCatalogItem
@@ -87,7 +89,7 @@ onMounted(() => {
   opacity: 0;
   visibility: hidden;
 
-  transition: opacity .2s ease-in-out, visibility .2s ease-in-out;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
 
   &.active {
     opacity: 1;
@@ -138,6 +140,8 @@ onMounted(() => {
   }
 
   &__item-wrapper {
+    width: 100%;
+
     @include flex-container(row, flex-start, center);
 
     gap: 16px;

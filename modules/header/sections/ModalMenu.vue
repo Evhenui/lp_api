@@ -7,7 +7,7 @@
     <div @click.stop class="modal-menu__wrapper">
       <section class="modal-menu__content">
         <header class="modal-menu__header">
-          <a href="#" class="modal-menu__logo">
+          <!-- <a href="#" class="modal-menu__logo">
             <svg
               width="48"
               height="48"
@@ -58,7 +58,8 @@
                 fill="#F36C21"
               />
             </svg>
-          </a>
+          </a> -->
+          <Logo :orange="isLogoOrange" @click.stop="closeModal"/>
           <div class="modal-menu__language">
             <ButtonLanguage
               :language="'ua'"
@@ -898,6 +899,7 @@ import ButtonLanguage from '../components/UI/ButtonLanguage.vue';
 import ModalMenuItem from '../components/UI/ModalMenuItem.vue';
 import CatalogItem from '../components/UI/CatalogItem.vue';
 import { useHeaderStore } from '~~/store/headerStore';
+import Logo from '~~/modules/header/components/UI/Logo.vue';
 
 const dropdownAboutCompany = ref(false);
 const dropdownServices = ref(false);
@@ -905,6 +907,7 @@ const mobileCatalog = ref(false);
 const currentIndex = ref(null);
 const currentIndexSubmenu = ref(null);
 const positionMenu = ref(0);
+const isLogoOrange = ref(false);
 
 const header = useHeaderStore();
 const menuItems = header.getModalMenu;
@@ -933,7 +936,9 @@ function openCatalog() {
 function defaulModal() {
   if (window.innerWidth > 1024) {
     mobileCatalog.value = false;
+    isLogoOrange.value = true;
   }
+  else isLogoOrange.value = false;
 }
 
 function showMenu(index) {
@@ -1034,12 +1039,9 @@ onMounted(() => {
     padding: 4px 16px;
 
     @include mobile {
+      gap: 16px;
       justify-content: space-between;
     }
-  }
-
-  &__logo {
-    font-size: 0;
   }
 
   &__logo-image {
@@ -1053,12 +1055,6 @@ onMounted(() => {
 
     gap: 24px;
     margin-right: 24px;
-  }
-
-  &__close {
-    font-size: 0;
-
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
   &__main {

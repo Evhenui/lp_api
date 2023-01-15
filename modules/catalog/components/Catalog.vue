@@ -11,20 +11,15 @@
           <div class="category-card__img-cont">
             <img
               class="category-card__img"
-              :src="category.images[1]?.url"
+              :src="category.images[0]?.url"
               :alt="category.slug"
             />
           </div>
         </NuxtLink>
         <div class="category-card__info">
           <h3 class="category-card__title">{{ category.name[lang] }}</h3>
-          <p class="category-card__text">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Consequatur, similique! Animi magni accusantium nemo voluptatibus
-            voluptate laboriosam, molestiae vero nulla soluta exercitationem
-            quae delectus, quidem, adipisci aperiam blanditiis incidunt
-            distinctio.
-          </p>
+          <div class="category-card__text"  v-html="category.contents[1]?.body?.[lang]">
+          </div>
           <NuxtLink class="category-card__link" :to="`/${category.slug}`"
             >перейти</NuxtLink
           >
