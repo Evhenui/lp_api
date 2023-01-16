@@ -1,17 +1,11 @@
 <template>
   <aside class="navigation" :class="{ active: activeFilters }">
     <section class="navigation__status">
-      <!--     <CheckBox v-model="checkboxesValue.suggestions.stock">
-        <span class="navigation__checkbox-title">Акции</span>
-      </CheckBox> -->
+      <CheckBox v-model="test">Акции {{ test }}</CheckBox>
 
-      <!--     <CheckBox v-model="checkboxesValue.suggestions.novelty">
-        <span class="navigation__checkbox-title">Новинки</span>
-      </CheckBox> -->
+      <CheckBox v-model="checkboxesValue.suggestions.novelty">Новинки</CheckBox>
 
-      <!--       <CheckBox v-model="checkboxesValue.suggestions.topSales">
-        <span class="navigation__checkbox-title">Топ продаж</span>
-      </CheckBox> -->
+      <CheckBox v-model="checkboxesValue.suggestions.topSales">Топ продаж</CheckBox>
     </section>
     <section class="navigation__filter">
       <div
@@ -19,7 +13,7 @@
         class="navigation__filter-header price-control"
       >
         <h1 class="navigation__filter-name">Цена</h1>
-     <!--    <SvgIcon class="navigation__arrow" :icon="icons['arrow-down']" /> -->
+        <!--    <SvgIcon class="navigation__arrow" :icon="icons['arrow-down']" /> -->
       </div>
       <div class="navigation__filter-body price-control">
         <FilterPriceControl />
@@ -28,43 +22,38 @@
     <section class="navigation__filter">
       <div @click="activeFilter" class="navigation__filter-header">
         <h1 class="navigation__filter-name">Мощность VA/W</h1>
-     <!--    <SvgIcon class="navigation__arrow" :icon="icons['arrow-down']" /> -->
+        <!--    <SvgIcon class="navigation__arrow" :icon="icons['arrow-down']" /> -->
       </div>
       <div ref="filterPower" class="navigation__filter-body">
-        <!--         <CheckBox
+        <CheckBox
           class="navigation__filter-item"
           v-model="checkboxesValue.power.item1"
-        >
-          <span class="navigation__checkbox-title">1000/900 (43)</span>
-        </CheckBox> -->
+        >1000/900 (43)
+        </CheckBox>
 
-        <!--        <CheckBox
+        <CheckBox
           class="navigation__filter-item"
           v-model="checkboxesValue.power.item2"
-        >
-          <span class="navigation__checkbox-title">1000/900 (43)</span>
-        </CheckBox> -->
+        >1000/900 (43)
+        </CheckBox>
 
-        <!--      <CheckBox
+        <CheckBox
           class="navigation__filter-item"
           v-model="checkboxesValue.power.item3"
-        >
-          <span class="navigation__checkbox-title">1000/900 (43)</span>
-        </CheckBox> -->
+        >1000/900 (43)
+        </CheckBox>
 
-        <!--      <CheckBox
+        <CheckBox
           class="navigation__filter-item"
           v-model="checkboxesValue.power.item4"
-        >
-          <span class="navigation__checkbox-title">1000/900 (43)</span>
-        </CheckBox> -->
+        >1000/900 (43)
+        </CheckBox>
 
-        <!--         <CheckBox
+        <CheckBox
           class="navigation__filter-item"
           v-model="checkboxesValue.power.item5"
-        >
-          <span class="navigation__checkbox-title">1000/900 (43)</span>
-        </CheckBox> -->
+        >1000/900 (43)
+        </CheckBox>
 
         <ShowAll @click="showAll" />
       </div>
@@ -75,19 +64,17 @@
         <!--  <SvgIcon class="navigation__arrow" :icon="icons['arrow-down']" /> -->
       </div>
       <div class="navigation__filter-body">
-        <!--         <CheckBox
+        <CheckBox
           class="navigation__filter-item"
           v-model="checkboxesValue.networkConnection.item1"
-        >
-          <span class="navigation__checkbox-title">Евровилка (43)</span>
-        </CheckBox> -->
+        >Евровилка (43)
+        </CheckBox>
 
-        <!--         <CheckBox
+        <CheckBox
           class="navigation__filter-item"
           v-model="checkboxesValue.networkConnection.item2"
-        >
-          <span class="navigation__checkbox-title">Клеммы (43)</span>
-        </CheckBox> -->
+        >Клеммы (43)
+        </CheckBox>
       </div>
     </section>
     <section class="navigation__filter">
@@ -96,18 +83,16 @@
         <!-- <SvgIcon class="navigation__arrow" :icon="icons['arrow-down']" /> -->
       </div>
       <div class="navigation__filter-body">
-        <!--         <CheckBox
+        <CheckBox
           class="navigation__filter-item"
           v-model="checkboxesValue.upsConnection.item1"
-        >
-          <span class="navigation__checkbox-title">IEC320 C13 (43)</span>
-        </CheckBox> -->
-        <!--         <CheckBox
+        >IEC320 C13 (43)
+        </CheckBox>
+        <CheckBox
           class="navigation__filter-item"
           v-model="checkboxesValue.upsConnection.item1"
-        >
-          <span class="navigation__checkbox-title">Клеммы (43)</span>
-        </CheckBox> -->
+        >Клеммы (43)
+        </CheckBox>
       </div>
     </section>
   </aside>
@@ -116,13 +101,15 @@
 <script setup>
 import FilterPriceControl from "~/modules/filter/components/UI/FilterPriceControl.vue";
 import ShowAll from "~/modules/filter/components/UI/ShowAll.vue";
-/* import CheckBox from "@components/common/buttons/CheckBox.vue"; */
+import CheckBox from "~/modules/filter/components/UI/CheckBox.vue";
 
 const props = defineProps({
   activeFilters: { type: Boolean, required: false },
 });
 
 const filterPower = ref(null);
+
+const test = ref(false);
 
 const checkboxesValue = {
   suggestions: {
@@ -220,25 +207,6 @@ onMounted(() => {
       padding: 16px 0;
 
       visibility: visible;
-    }
-  }
-
-  .navigation__checkbox-title {
-    @include flex-container(row, flex-start);
-
-    letter-spacing: 0.02em;
-
-    gap: 16px;
-    padding: 8px 0;
-
-    &::before {
-      width: 16px;
-      height: 16px;
-
-      @include bigMobile {
-        width: 24px;
-        height: 24px;
-      }
     }
   }
 
