@@ -16,6 +16,11 @@
         :class="{ filled: choisedValue.length }"
       />
       <span class="select__caption">{{ caption }}</span>
+      <div class="select__arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 9.125L12 14.875L18 9.125" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+      </div>
     </div>
     <div class="select__option-list">
       <div
@@ -50,8 +55,12 @@ const choisedValue = ref("");
     } */
 </script>
   
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
 .select {
+  width: 100%;
+
+  @include flex-container(row, space-between, center);
+  
   &__w {
     position: relative;
 
@@ -74,6 +83,10 @@ const choisedValue = ref("");
 
     &.active {
       border-color: #0e0f0f;
+
+      .select__arrow {
+        transform: rotateZ(180deg);
+      }
 
       .select__icon {
         transform: rotateZ(180deg);
@@ -117,6 +130,12 @@ const choisedValue = ref("");
         padding-inline: 4px;
       }
     }
+  }
+
+  &__arrow {
+    font-size: 0;
+
+    transition: transform .2s ease-in-out;
   }
 
   &__caption {

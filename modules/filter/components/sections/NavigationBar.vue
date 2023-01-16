@@ -1,100 +1,10 @@
 <template>
   <aside class="navigation" :class="{ active: activeFilters }">
-    <section class="navigation__status">
-      <CheckBox v-model="test">Акции {{ test }}</CheckBox>
-
-      <CheckBox v-model="checkboxesValue.suggestions.novelty">Новинки</CheckBox>
-
-      <CheckBox v-model="checkboxesValue.suggestions.topSales">Топ продаж</CheckBox>
-    </section>
-    <section class="navigation__filter">
-      <div
-        @click="activeFilter"
-        class="navigation__filter-header price-control"
-      >
-        <h1 class="navigation__filter-name">Цена</h1>
-        <!--    <SvgIcon class="navigation__arrow" :icon="icons['arrow-down']" /> -->
-      </div>
-      <div class="navigation__filter-body price-control">
-        <FilterPriceControl />
-      </div>
-    </section>
-    <section class="navigation__filter">
-      <div @click="activeFilter" class="navigation__filter-header">
-        <h1 class="navigation__filter-name">Мощность VA/W</h1>
-        <!--    <SvgIcon class="navigation__arrow" :icon="icons['arrow-down']" /> -->
-      </div>
-      <div ref="filterPower" class="navigation__filter-body">
-        <CheckBox
-          class="navigation__filter-item"
-          v-model="checkboxesValue.power.item1"
-        >1000/900 (43)
-        </CheckBox>
-
-        <CheckBox
-          class="navigation__filter-item"
-          v-model="checkboxesValue.power.item2"
-        >1000/900 (43)
-        </CheckBox>
-
-        <CheckBox
-          class="navigation__filter-item"
-          v-model="checkboxesValue.power.item3"
-        >1000/900 (43)
-        </CheckBox>
-
-        <CheckBox
-          class="navigation__filter-item"
-          v-model="checkboxesValue.power.item4"
-        >1000/900 (43)
-        </CheckBox>
-
-        <CheckBox
-          class="navigation__filter-item"
-          v-model="checkboxesValue.power.item5"
-        >1000/900 (43)
-        </CheckBox>
-
-        <ShowAll @click="showAll" />
-      </div>
-    </section>
-    <section class="navigation__filter">
-      <div @click="activeFilter" class="navigation__filter-header">
-        <h1 class="navigation__filter-name">Тип подключения к сети</h1>
-        <!--  <SvgIcon class="navigation__arrow" :icon="icons['arrow-down']" /> -->
-      </div>
-      <div class="navigation__filter-body">
-        <CheckBox
-          class="navigation__filter-item"
-          v-model="checkboxesValue.networkConnection.item1"
-        >Евровилка (43)
-        </CheckBox>
-
-        <CheckBox
-          class="navigation__filter-item"
-          v-model="checkboxesValue.networkConnection.item2"
-        >Клеммы (43)
-        </CheckBox>
-      </div>
-    </section>
-    <section class="navigation__filter">
-      <div @click="activeFilter" class="navigation__filter-header">
-        <h1 class="navigation__filter-name">Тип подключения нагрузки к ИБП</h1>
-        <!-- <SvgIcon class="navigation__arrow" :icon="icons['arrow-down']" /> -->
-      </div>
-      <div class="navigation__filter-body">
-        <CheckBox
-          class="navigation__filter-item"
-          v-model="checkboxesValue.upsConnection.item1"
-        >IEC320 C13 (43)
-        </CheckBox>
-        <CheckBox
-          class="navigation__filter-item"
-          v-model="checkboxesValue.upsConnection.item1"
-        >Клеммы (43)
-        </CheckBox>
-      </div>
-    </section>
+    <NavItem 
+      v-for="(item, index) in filters"
+      :key="index"
+      :values="item"
+    />
   </aside>
 </template>
 
@@ -102,6 +12,7 @@
 import FilterPriceControl from "~/modules/filter/components/UI/FilterPriceControl.vue";
 import ShowAll from "~/modules/filter/components/UI/ShowAll.vue";
 import CheckBox from "~/modules/filter/components/UI/CheckBox.vue";
+import NavItem from "~/modules/filter/components/sections/NavItem.vue";
 
 const props = defineProps({
   activeFilters: { type: Boolean, required: false },
@@ -109,69 +20,14 @@ const props = defineProps({
 
 const filterPower = ref(null);
 
-const test = ref(false);
+const filters = reactive([
+  {name: 'suggestions', title: '', checkboxes: ['Акции', 'Новинки', 'Топ продаж']},
+  {name: 'priceControl', title: 'Цена', checkboxes: [], priceControl: true},
+  {name: 'power', title: 'Мощность VA/W', checkboxes: ['1000/900 (43)', '1000/900 (43)', '1000/900 (43)','1000/900 (43)', '1000/900 (43)', '1000/900 (43)','1000/900 (43)', '1000/900 (43)', '1000/900 (43)'], buttonMore: true},
+  {name: 'networkConnection', title: 'Тип подключения к сети', checkboxes: ['Евровилка (43)', 'Клеммы (43)']},
+  {name: 'upsConnection', title: 'Тип подключения нагрузки к ИБП', checkboxes: ['IEC320 C13 (43)', 'Клеммы (43)']},
+]);
 
-const checkboxesValue = {
-  suggestions: {
-    stock: false,
-    novelty: false,
-    topSales: false,
-  },
-  power: {
-    item1: false,
-    item2: false,
-    item3: false,
-    item4: false,
-    item5: false,
-  },
-  networkConnection: {
-    item1: false,
-    item2: false,
-  },
-  upsConnection: {
-    item1: false,
-    item2: false,
-  },
-};
-
-const initialHeight = ref(0);
-
-function getInitialHeight() {
-  initialHeight.value = filterPower.value.scrollHeight;
-}
-
-function activeFilter(event) {
-  const bodySection = event.currentTarget.nextElementSibling;
-
-  event.currentTarget.classList.toggle("active");
-
-  if (event.currentTarget.classList.contains("active")) {
-    window.getComputedStyle(bodySection).getPropertyValue("--height");
-    bodySection.style.setProperty("--height", bodySection.scrollHeight + "px");
-  } else {
-    window.getComputedStyle(bodySection).getPropertyValue("--height");
-    bodySection.style.setProperty("--height", 0 + "px");
-  }
-}
-
-function showAll() {
-  filterPower.value.classList.toggle("active");
-
-  if (filterPower.value.classList.contains("active")) {
-    window.getComputedStyle(filterPower.value).getPropertyValue("--height");
-    filterPower.value.style.setProperty(
-      "--height",
-      filterPower.value.scrollHeight + "px"
-    );
-  } else {
-    window.getComputedStyle(filterPower.value).getPropertyValue("--height");
-    filterPower.value.style.setProperty("--height", initialHeight.value + "px");
-  }
-}
-
-onMounted(() => {
-  getInitialHeight();
-});
 </script>
 
 <style lang="scss" scoped>
@@ -255,8 +111,7 @@ onMounted(() => {
   }
 
   &__arrow {
-    width: 24px;
-    height: 24px;
+    font-size: 0;
 
     flex: 0 0 auto;
 
@@ -288,20 +143,6 @@ onMounted(() => {
       }
     }
   }
-}
-
-.slide-fade-enter-active {
-  transition: all 0.3s ease;
-}
-.slide-fade-leave-active {
-  transition: all 0.3s ease;
-}
-.slide-fade-enter {
-  height: 100%;
-}
-
-.slide-fade-leave-to {
-  height: 0;
 }
 </style>
           

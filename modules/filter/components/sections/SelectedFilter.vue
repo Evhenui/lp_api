@@ -3,13 +3,11 @@
     <h3 class="selected-filters__title">Выбранные фильтры:</h3>
     <FilterMenu class="selected-filters__mobile-title">Фильтры</FilterMenu>
     <ul class="selected-filters__filters">
-      <li
-        class="selected-filters__filter"
+      <FilterItem 
         v-for="(item, index) in items"
         :key="index"
-      >
-        <FilterItem>{{ item.name }}</FilterItem>
-      </li>
+        >{{ item.name }}
+      </FilterItem>
     </ul>
   </section>
 </template>
@@ -71,6 +69,7 @@ const props = defineProps({
     @include bigMobile {
     }
   }
+  
 }
 </style>
         
